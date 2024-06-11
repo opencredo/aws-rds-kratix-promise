@@ -1,0 +1,15 @@
+apiVersion: rds.services.k8s.aws/v1alpha1
+kind: DBInstance
+metadata:
+  name: "test-postgres-instance"
+spec:
+  allocatedStorage: 20
+  dbInstanceClass: db.t4g.micro
+  dbInstanceIdentifier: "test-postgres-instance"
+  engine: postgres
+  engineVersion: "14"
+  masterUsername: "postgres"
+  masterUserPassword:
+    namespace: default
+    name: "test-postgres-instance-password"
+    key: password
