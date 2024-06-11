@@ -26,4 +26,5 @@ jobs:
         env:
           DEFAULT_BRANCH: main
           VALIDATE_KUBERNETES_KUBECONFORM: false
+          VALIDATE_JSCPD: false # because we have CRDs from aws controller
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

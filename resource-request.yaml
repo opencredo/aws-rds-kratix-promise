@@ -1,0 +1,9 @@
+apiVersion: example.promise.syntasso.io/v1
+kind: AWSRDS
+metadata:
+  name: "PostgresRDSInstance"
+spec:
+  name: "PostgresRDSInstance"
+  namespace: default
+  engine: "postgres"
+  engineVersion: "14"

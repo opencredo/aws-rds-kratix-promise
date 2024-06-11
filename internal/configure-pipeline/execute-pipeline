@@ -1,0 +1,37 @@
+#!/usr/bin/env sh
+
+set -eux
+
+if [ "$KRATIX_WORKFLOW_TYPE" = "promise" ]; then
+
+  echo "Executing promise workflow"
+  cp /tmp/transfer/dependencies/* /kratix/output/
+
+elif [ "$KRATIX_WORKFLOW_TYPE" = "resource" ]; then
+
+  echo "Executing resource workflow"
+  base_instance="/tmp/transfer/resources/rds-instance.yaml"
+
+  # Read current values from the provided resource request
+  name="$(yq eval '.spec.name' /kratix/input/object.yaml)"
+  namespace="$(yq eval '.spec.namespace // "default"' /kratix/input/object.yaml)"
+  engine="$(yq eval '.spec.engine // "postgres"' /kratix/input/object.yaml)"
+  engineVersion="$(yq eval '.spec.engineVersion' /kratix/input/object.yaml)"
+
+  # Replace defaults with user provided values
+  cat ${base_instance} |
+    yq eval "
+      .metadata.namespace = \"${namespace}\" |
+      .metadata.name = \"${name}\" |
+      .spec.dbInstanceIdentifier = ${name} |
+      .spec.masterUsername = ${name} |
+      .spec.engine = \"${engine}\" |
+      .spec.engineVersion = \"${engineVersion}\"
+    " - > /kratix/output/rds-instance.yaml
+
+else
+
+  echo "Error: Unknown workflow. Exiting with error"
+  exit 1
+
+fi
