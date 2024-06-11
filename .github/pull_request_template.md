@@ -15,7 +15,7 @@ In order to have this pull request merged, complete the following tasks.
 - [ ] If this pull request is about and existing issue,
   I added the `Fix #ISSUE_NUMBER` label to the description of the pull request.
 
-### Promise Flink maintainer tasks
+### Promise aws-rds maintainer tasks
 
 - [ ] Label as `breaking` if this change breaks compatibility with the previous released version.
 - [ ] Label as either: `automation`, `bug`, `documentation`, `enhancement`, `infrastructure`.

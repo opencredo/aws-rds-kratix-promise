@@ -1,0 +1,525 @@
+---
+# Source: rds-chart/templates/service-account.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/name: rds-chart
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.2.5"
+    k8s-app: rds-chart
+    helm.sh/chart: rds-chart-1.2.5
+  name: ack-rds-controller
+  namespace: default
+  annotations:
+---
+# Source: rds-chart/templates/caches-role.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ack-namespaces-cache-rds-controller
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+---
+# Source: rds-chart/templates/cluster-role-controller.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ack-rds-controller
+  labels:
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - list
+  - patch
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+  - list
+  - patch
+  - watch
+- apiGroups:
+  - ec2.services.k8s.aws
+  resources:
+  - securitygroups
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ec2.services.k8s.aws
+  resources:
+  - securitygroups/status
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ec2.services.k8s.aws
+  resources:
+  - subnets
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ec2.services.k8s.aws
+  resources:
+  - subnets/status
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - kms.services.k8s.aws
+  resources:
+  - keys
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - kms.services.k8s.aws
+  resources:
+  - keys/status
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - rds.services.k8s.aws
+  resources:
+  - dbclusterparametergroups
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - rds.services.k8s.aws
+  resources:
+  - dbclusterparametergroups/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - rds.services.k8s.aws
+  resources:
+  - dbclusters
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - rds.services.k8s.aws
+  resources:
+  - dbclusters/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - rds.services.k8s.aws
+  resources:
+  - dbinstances
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - rds.services.k8s.aws
+  resources:
+  - dbinstances/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - rds.services.k8s.aws
+  resources:
+  - dbparametergroups
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - rds.services.k8s.aws
+  resources:
+  - dbparametergroups/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - rds.services.k8s.aws
+  resources:
+  - dbproxies
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - rds.services.k8s.aws
+  resources:
+  - dbproxies/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - rds.services.k8s.aws
+  resources:
+  - dbsubnetgroups
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - rds.services.k8s.aws
+  resources:
+  - dbsubnetgroups/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - rds.services.k8s.aws
+  resources:
+  - globalclusters
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - rds.services.k8s.aws
+  resources:
+  - globalclusters/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - services.k8s.aws
+  resources:
+  - adoptedresources
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - services.k8s.aws
+  resources:
+  - adoptedresources/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - services.k8s.aws
+  resources:
+  - fieldexports
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - services.k8s.aws
+  resources:
+  - fieldexports/status
+  verbs:
+  - get
+  - patch
+  - update
+---
+# Source: rds-chart/templates/caches-role-binding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ack-namespaces-cache-rds-controller
+roleRef:
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+  name: ack-namespaces-cache-rds-controller
+subjects:
+- kind: ServiceAccount
+  name: ack-rds-controller
+  namespace: default
+---
+# Source: rds-chart/templates/cluster-role-binding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: release-name-rds-chart
+roleRef:
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+  name: ack-rds-controller
+subjects:
+- kind: ServiceAccount
+  name: ack-rds-controller
+  namespace: default
+---
+# Source: rds-chart/templates/caches-role.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: ack-configmaps-cache-rds-controller
+  namespace: default
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+---
+# Source: rds-chart/templates/role-reader.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  creationTimestamp: null
+  name: ack-rds-reader
+  namespace: default
+rules:
+- apiGroups:
+  - rds.services.k8s.aws
+  resources:
+  - dbclusters
+  - dbclusterparametergroups
+  - dbinstances
+  - dbparametergroups
+  - dbproxies
+  - dbsubnetgroups
+  - globalclusters
+  verbs:
+  - get
+  - list
+  - watch
+---
+# Source: rds-chart/templates/role-writer.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  creationTimestamp: null
+  name: ack-rds-writer
+  namespace: default
+rules:
+- apiGroups:
+  - rds.services.k8s.aws
+  resources:
+  - dbclusters
+  - dbclusterparametergroups
+  - dbinstances
+  - dbparametergroups
+  - dbproxies
+  - dbsubnetgroups
+  - globalclusters
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - rds.services.k8s.aws
+  resources:
+  - dbclusters
+  - dbclusterparametergroups
+  - dbinstances
+  - dbparametergroups
+  - dbproxies
+  - dbsubnetgroups
+  - globalclusters
+  verbs:
+  - get
+  - patch
+  - update
+---
+# Source: rds-chart/templates/caches-role-binding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ack-configmaps-cache-rds-controller
+  namespace: default
+roleRef:
+  kind: Role
+  apiGroup: rbac.authorization.k8s.io
+  name: ack-configmaps-cache-rds-controller
+subjects:
+- kind: ServiceAccount
+  name: ack-rds-controller
+  namespace: default
+---
+# Source: rds-chart/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: release-name-rds-chart
+  namespace: default
+  labels:
+    app.kubernetes.io/name: rds-chart
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.2.5"
+    k8s-app: rds-chart
+    helm.sh/chart: rds-chart-1.2.5
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rds-chart
+      app.kubernetes.io/instance: release-name
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: rds-chart
+        app.kubernetes.io/instance: release-name
+        app.kubernetes.io/managed-by: Helm
+        k8s-app: rds-chart
+    spec:
+      serviceAccountName: ack-rds-controller
+      containers:
+      - command:
+        - ./bin/controller
+        args:
+        - --aws-region
+        - "eu-west-2"
+        - --aws-endpoint-url
+        - "$(AWS_ENDPOINT_URL)"
+        - --log-level
+        - "$(ACK_LOG_LEVEL)"
+        - --resource-tags
+        - "$(ACK_RESOURCE_TAGS)"
+        - --watch-namespace
+        - "$(ACK_WATCH_NAMESPACE)"
+        - --deletion-policy
+        - "$(DELETION_POLICY)"
+        - --reconcile-default-resync-seconds
+        - "$(RECONCILE_DEFAULT_RESYNC_SECONDS)"
+        - --reconcile-default-max-concurrent-syncs
+        - "$(RECONCILE_DEFAULT_MAX_CONCURRENT_SYNCS)"
+        image: public.ecr.aws/aws-controllers-k8s/rds-controller:1.2.5
+        imagePullPolicy: IfNotPresent
+        name: controller
+        ports:
+          - name: http
+            containerPort: 8080
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 50m
+            memory: 64Mi
+        env:
+        - name: ACK_SYSTEM_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: AWS_REGION
+          value: "eu-west-2"
+        - name: AWS_ENDPOINT_URL
+          value: ""
+        - name: ACK_WATCH_NAMESPACE
+          value: 
+        - name: DELETION_POLICY
+          value: delete
+        - name: LEADER_ELECTION_NAMESPACE
+          value: ""
+        - name: ACK_LOG_LEVEL
+          value: "info"
+        - name: ACK_RESOURCE_TAGS
+          value: "services.k8s.aws/controller-version=%CONTROLLER_SERVICE%-%CONTROLLER_VERSION%,services.k8s.aws/namespace=%K8S_NAMESPACE%"
+        - name: RECONCILE_DEFAULT_RESYNC_SECONDS
+          value: "36000"
+        - name: RECONCILE_DEFAULT_MAX_CONCURRENT_SYNCS
+          value: "1"
+        volumeMounts:
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          runAsNonRoot: true
+          capabilities:
+            drop:
+              - ALL
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      terminationGracePeriodSeconds: 10
+      nodeSelector: 
+        kubernetes.io/os: linux
+      hostIPC: false
+      hostPID: false
+      hostNetwork: false
+      dnsPolicy: ClusterFirst
+      volumes:
