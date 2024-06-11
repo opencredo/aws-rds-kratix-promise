@@ -35,6 +35,13 @@ spec:
                     name:
                       type: string
                       description: AWS RDS instance name
+                    engine:
+                      default: postgres
+                      type: string
+                      description: Choose aws rds engine(examples aurora, postgres, mysql etc)
+                    engineVersion:
+                      type: string
+                      description: Aws rds engine version
   workflows:
     promise:
       configure:
