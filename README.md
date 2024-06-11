@@ -11,8 +11,8 @@ This promise is the starting point to create a promise using ACK's so that aws r
 - Kratix [see install guide](https://docs.kratix.io/main/guides/installing-kratix/single-cluster)
 - Docker environment with the ability to build images for both amd64 or arm64 architectures.
 
-## Note: 
-We have tried running this on local kubernetes clusters(minikube and kind) instead of EKS but there are many challenges in it since we are using ACK's for this promise and they were primarily written to work best on the EKS clusters.
+## Note
+We have tried running this on local kubernetes clusters(minikube and kind) instead of EKS but there are many challenges in it since we are using ACK's for this promise, and they were primarily written to work best on the EKS clusters.
 We have detailed information about this promise [here](https://opencredo.atlassian.net/wiki/spaces/ADA/embed/434339842)
 
 ### Setup (Promise)
