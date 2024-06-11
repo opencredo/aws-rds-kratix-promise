@@ -13,7 +13,7 @@ This promise is the starting point to create a promise using ACK's so that aws r
 
 ## Note
 We have tried running this on local kubernetes clusters(minikube and kind) instead of EKS but there are many challenges in it since we are using ACK's for this promise, and they were primarily written to work best on the EKS clusters.
-We have detailed information about this promise [here](https://opencredo.atlassian.net/wiki/spaces/ADA/embed/434339842)
+We have detailed information about this promise [here](https://opencredo.atlassian.net/wiki/spaces/ADA/blog/2024/06/11/434634753/AWS+RDS+Kratix+promise)
 
 ### Setup (Promise)
 ```bash
