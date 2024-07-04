@@ -24,8 +24,12 @@ kubectl apply --context $PLATFORM --filename promise.yaml
 kubectl --context $WORKER get pods --watch
 ```
 
+### Setup IRSA
+AWS ACK requires IRSA setup so that it the controller installed along with promise can interact with the aws-rds api's.
+Follow the instruction as mentioned [here](https://aws-controllers-k8s.github.io/community/docs/user-docs/irsa/)
+
 ### Setup (Request)
-Once the rds operator is running as seen in the previous step you are ready to fulfil a [resource-request](resource-request.yaml) as a RDSInstance job:
+Once the rds operator is running as seen in the previous step and IRSA setup done, you are ready to fulfil a [resource-request](resource-request.yaml) as a RDSInstance job:
 ```bash
 kubectl apply --context $PLATFORM --filename resource-request.yaml
 ```
