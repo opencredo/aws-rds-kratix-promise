@@ -25,7 +25,7 @@ kubectl --context $WORKER get pods --watch
 ```
 
 ### Setup IRSA
-AWS ACK requires IRSA setup so that it the controller installed along with promise can interact with the aws-rds api's.
+AWS ACK requires IRSA setup so that it the controller installed along with promise can interact with the aws-rds APIs.
 Follow the instruction as mentioned [here](https://aws-controllers-k8s.github.io/community/docs/user-docs/irsa/)
 
 ### Setup (Request)
