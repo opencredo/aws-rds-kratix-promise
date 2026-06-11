@@ -1,5 +1,8 @@
 # aws-rds-kratix-promise
 
+> [!NOTE]
+> This repo has been archived and is no longer under development. OpenCredo is now part of [Trifork](https://github.com/trifork).
+
 This project provides a Kubernetes operator for managing AWS RDS instances using a Kratix-backed state store. This promise uses aws controllers(ACK) for kubernetes as the underlying operator/controller. Aws-rds kratix promise can be used to enforce company standards, security and rules.
 This promise is the starting point to create a promise using ACK's so that aws rds resource can be created by the application developer from the EKS cluster itself independently without relying on platform engineering team and needing to have separate access to AWS cloud.
 
